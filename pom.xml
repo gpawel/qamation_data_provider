@@ -8,27 +8,25 @@
     <artifactId>qamation_data_provider</artifactId>
     <version>1.0</version>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>4.1.1</version>
+            <version>5.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>3.17</version>
+            <version>5.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
-            <artifactId>qamation</artifactId>
-            <version>4.5</version>
+            <artifactId>qamation-common</artifactId>
+            <version>2.0</version>
         </dependency>
-
     </dependencies>
-
 
 </project>

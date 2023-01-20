@@ -8,7 +8,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.qamation.utils.StringUtils;
 
 @Deprecated
 public class ExcelUtils {
@@ -164,17 +163,17 @@ public class ExcelUtils {
     private String getStringValueFromCell(Cell c) {
 
         switch (c.getCellType()) {
-            case Cell.CELL_TYPE_BLANK: return "";
-            case Cell.CELL_TYPE_STRING: return c.getStringCellValue();
-            case Cell.CELL_TYPE_BOOLEAN : {
+            case BLANK: return "";
+            case STRING: return c.getStringCellValue();
+            case BOOLEAN : {
                 if (c.getBooleanCellValue()) return "true";
                 return "false";
             }
-            case Cell.CELL_TYPE_ERROR: return "ERROR: "+String.valueOf(c.getErrorCellValue());
-            case Cell.CELL_TYPE_FORMULA: {
+            case ERROR: return "ERROR: "+String.valueOf(c.getErrorCellValue());
+            case FORMULA: {
                 return evaluateCell(c);
             }
-            case Cell.CELL_TYPE_NUMERIC: {
+            case NUMERIC: {
                 if (DateUtil.isCellDateFormatted(c)) {
                     return String.valueOf(c.getDateCellValue());
                 }

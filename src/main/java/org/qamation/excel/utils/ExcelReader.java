@@ -3,7 +3,7 @@ package org.qamation.excel.utils;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.qamation.utils.FileUtils;
+import org.qamation.commons.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,13 +53,10 @@ public class ExcelReader {
     public Iterator<String[]> getIterator() {
         final int initPosition = this.iteratorInitPosition;
         return new Iterator<String[]>() {
-            int availableLines = getNumberOfLinesInActiveWorkSheet();
             private int cursor = initPosition;
-
             @Override
             public boolean hasNext() {
-                if (cursor < availableLines) return true;
-                return false;
+                return cursor < getNumberOfLinesInActiveWorkSheet();
             }
 
             @Override
@@ -173,20 +170,20 @@ public class ExcelReader {
 
     private String getStringValueFromCell(Cell c) {
         switch (c.getCellType()) {
-            case Cell.CELL_TYPE_BLANK:
+            case BLANK:
                 return "";
-            case Cell.CELL_TYPE_STRING:
+            case STRING:
                 return c.getStringCellValue();
-            case Cell.CELL_TYPE_BOOLEAN: {
+            case BOOLEAN: {
                 if (c.getBooleanCellValue()) return "true";
                 return "false";
             }
-            case Cell.CELL_TYPE_ERROR:
+            case ERROR:
                 return "ERROR: " + String.valueOf(c.getErrorCellValue());
-            case Cell.CELL_TYPE_FORMULA: {
+            case FORMULA: {
                 return evaluateCell(c);
             }
-            case Cell.CELL_TYPE_NUMERIC: {
+            case NUMERIC: {
                 if (DateUtil.isCellDateFormatted(c)) {
                     return String.valueOf(c.getDateCellValue());
                 } else
