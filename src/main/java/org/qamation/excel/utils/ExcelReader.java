@@ -1,12 +1,10 @@
 package org.qamation.excel.utils;
 
-
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+
 import org.qamation.commons.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,7 +12,6 @@ import java.util.Iterator;
 
 public class ExcelReader {
     private static final Logger log = LoggerFactory.getLogger(ExcelReader.class);
-    private static final Object LOCK = new Object();
     private Workbook workBook;
     private int activeSheetIndex;
     private String fileName;
