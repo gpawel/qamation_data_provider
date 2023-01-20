@@ -84,8 +84,7 @@ public class ExcelReader {
         if (row == null) {
             return createEmptyRow();
         }
-        String[] values = convertRowToStringArray(row);
-        return values;
+        return convertRowToStringArray(row);
     }
 
     public String getFileName() {
@@ -96,7 +95,7 @@ public class ExcelReader {
         return activeSheetIndex;
     }
 
-    public void closeWorkBook() throws IOException {
+    public void closeWorkBook() {
         closeBook();
         deleteFile();
         removeShutDownHook(hook);
@@ -121,11 +120,12 @@ public class ExcelReader {
     private void deleteFile() {
         if (theFile.exists()) {
             try {
-                theFile.delete();
+                if (!theFile.delete())
+                    throw new RuntimeException("File "+theFile.getName()+" could not be successfully deleted.");
             }
-            catch (Exception ex) {
+            catch (SecurityException ex) {
                 ex.printStackTrace();
-                throw new RuntimeException("Unable to delete file "+ theFile.getName()+"\n",ex);
+                throw new RuntimeException("Not enough permissions to delete "+ theFile.getName()+"\n",ex);
             }
         }
     }
@@ -147,8 +147,7 @@ public class ExcelReader {
     private Row getRow(int rowNumber) {
         if (rowNumber < 0 || rowNumber > sheet.getLastRowNum())
             throw new RuntimeException("Row index cannot be less than 0 or greater than number of rows in the current sheet.");
-        Row row = sheet.getRow(rowNumber);
-        return row;
+        return sheet.getRow(rowNumber);
     }
 
     private String[] createEmptyRow() {
@@ -229,7 +228,7 @@ public class ExcelReader {
         return new File(name);
     }
 
-    private Workbook createWorkBook(File file) throws IOException, InvalidFormatException {
+    private Workbook createWorkBook(File file) throws IOException {
         return WorkbookFactory.create(file);
     }
 

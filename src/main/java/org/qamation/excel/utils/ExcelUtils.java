@@ -65,15 +65,13 @@ public class ExcelUtils {
             throw new RuntimeException("Unable to create org.qamation.jmeter.data.provider.controller.excel file for " + fileName,ex);
         }
     }
-    public Iterator iterator() {
+    public Iterator<String[]> iterator() {
         return new Iterator<String[]>() {
             private int cursor = 1;
-            int availableLines = getNmberOfLinesInActiveWorkSheet();
 
             @Override
             public boolean hasNext() {
-                if (cursor <= availableLines) return true;
-                return false;
+                return cursor <= getNmberOfLinesInActiveWorkSheet();
             }
             @Override
             public String[] next() {
@@ -91,8 +89,7 @@ public class ExcelUtils {
         if (row == null) {
             return createEmptyRow();
         }
-        String[] values = convertRowToStringArray(row);
-        return values;
+        return convertRowToStringArray(row);
     }
     public int getNumberOfAvailableWorkSheets() {
         return workBook.getNumberOfSheets();
@@ -128,8 +125,7 @@ public class ExcelUtils {
     private Row getRow(int rowNumber) {
         if (rowNumber < 0 || rowNumber > sheet.getLastRowNum())
             throw new RuntimeException("Row index cannot be less than 0 or greater than number of rows in the current sheet.");
-        Row row = sheet.getRow(rowNumber);
-        return row;
+        return sheet.getRow(rowNumber);
     }
     private String[] createEmptyRow() {
         String[] values = new String[rowSize];
